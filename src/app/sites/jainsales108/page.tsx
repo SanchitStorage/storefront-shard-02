@@ -1,283 +1,412 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
-import { Raleway, Work_Sans } from "next/font/google";
-import { Star, Phone, MapPin, Sparkles, ShoppingBag, Tag, Heart, Scissors } from "lucide-react";
+import { Phone, MapPin, Star, Scissors, Shirt, Sparkles, Tag, Heart, TrendingUp } from "lucide-react";
+import { Lora, Work_Sans } from "next/font/google";
 
-const raleway = Raleway({
-  subsets: ["latin"],
-  variable: "--font-raleway",
-});
+const lora = Lora({ subsets: ["latin"], variable: "--font-lora" });
+const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans" });
 
-const workSans = Work_Sans({
-  subsets: ["latin"],
-  variable: "--font-work-sans",
-});
+const reviews = [
+  {
+    rating: 5,
+    text: "The collection is very nice and latest. Fabric is very comfortable Must buy",
+    date: "a year ago",
+  },
+  {
+    rating: 4,
+    text: "Whenever I've gone, I've bought something. Best place for shopping. It has a cooperative Staff,helped me in everything and provided me everything that I was looking for. Nd They also provide good offer,Must Go.",
+    date: "5 years ago",
+  },
+  {
+    rating: 5,
+    text: "All dresses available over here are of reasonable price.. And you will b guided for the dresses which will b suitable for you.. Best Services",
+    date: "5 years ago",
+  },
+  {
+    rating: 5,
+    text: "Very nice and latest collection with good stuff. I'm a regular customer and I can say everytime they attend the customer very politely and all the staff is also well behaved.",
+    date: "5 years ago",
+  },
+  {
+    rating: 5,
+    text: "I always buy ethnic and western wear from jain sales... quality, variety and price everything is just superb..",
+    date: "2 years ago",
+  },
+];
 
-// Utility components
-const FadeInOnScroll = ({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-      transition={{ duration: 0.5, ease: "easeOut", delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-};
+const services = [
+  {
+    icon: TrendingUp,
+    title: "Latest Fashion Collections",
+    desc: "Stay ahead with our freshly curated arrivals blending tradition and trend.",
+  },
+  {
+    icon: Shirt,
+    title: "Ethnic & Western Wear",
+    desc: "From elegant suits to chic western styles, find everything under one roof.",
+  },
+  {
+    icon: Heart,
+    title: "Comfortable & Quality Fabrics",
+    desc: "Every piece is chosen for its feel, drape, and lasting comfort.",
+  },
+  {
+    icon: Scissors,
+    title: "Personalized Styling Assistance",
+    desc: "Our attentive staff helps you find the perfect outfit for any occasion.",
+  },
+  {
+    icon: Tag,
+    title: "Seasonal Offers & Discounts",
+    desc: "Enjoy great value with regular promotions and festive deals.",
+  },
+];
 
 const StarRating = ({ rating }: { rating: number }) => {
   return (
-    <div className="flex gap-1">
-      {[1, 2, 3, 4, 5].map((star) => (
+    <div className="flex gap-0.5">
+      {[...Array(5)].map((_, i) => (
         <Star
-          key={star}
-          size={16}
-          className={star <= rating ? "text-[#C2726A] fill-[#C2726A]" : "text-[#E9E2DC]"}
+          key={i}
+          size={14}
+          fill={i < rating ? "#D4AF37" : "none"}
+          color={i < rating ? "#D4AF37" : "#C8B171"}
         />
       ))}
     </div>
   );
 };
 
-// Reusable button style
-const buttonClasses = `inline-flex items-center justify-center bg-[#C2726A] hover:bg-[#A35F4D] text-[#FDF8F2] font-bold rounded-[4px] py-3 px-4 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#C2726A] focus:ring-offset-2`;
-
-const services = [
-  { icon: Sparkles, title: "Latest Fashion Collections" },
-  { icon: ShoppingBag, title: "Ethnic & Western Wear" },
-  { icon: Scissors, title: "Personalized Styling Assistance" },
-  { icon: Heart, title: "Comfortable & Quality Fabrics" },
-  { icon: Tag, title: "Seasonal Offers & Discounts" },
-];
-
-const reviews = [
-  {
-    rating: 5,
-    text: "The collection is very nice and latest. Fabric is very comfortable Must buy",
-    time: "a year ago",
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 },
   },
-  {
-    rating: 4,
-    text: "Whenever I've gone, I've bought something. Best place for shopping. It has a cooperative Staff,helped me in everything and provided me everything that I was looking for. Nd They also provide good offer,Must Go.",
-    time: "5 years ago",
-  },
-  {
-    rating: 5,
-    text: "All dresses available over here are of reasonable price.. And you will b guided for the dresses which will b suitable for you.. Best Services",
-    time: "5 years ago",
-  },
-  {
-    rating: 5,
-    text: "Very nice and latest collection with good stuff. I'm a regular customer and I can say everytime they attend the customer very politely and all the staff is also well behaved.",
-    time: "5 years ago",
-  },
-  {
-    rating: 5,
-    text: "I always buy ethnic and western wear from jain sales... quality, variety and price everything is just superb..",
-    time: "2 years ago",
-  },
-];
-
-const images = [
-  "https://lh3.googleusercontent.com/SuMqXYuVPyZm7eNpzVOpD6fQ-20Bh9vJKCRd_Yrh3NUXV2njF9S4za9Xb-AMKnKAO6_uTSflWFr53yaR4LxywlXbEV_H=w300-rw",
-  "https://d1k13df5m14swc.cloudfront.net/7e89f2ac-a394-4980-92c5-1da969614dd3zoom.jpg",
-  "https://www.philipdavidcompany.com/wp-content/uploads/2026/JILZARAH-2026%20Outlet%20Catalog-cover.jpg",
-  "https://images.squarespace-cdn.com/content/v1/5c3e86153e2d094cd36322ab/86c3b40b-fb1e-469f-9430-715f6a3a8ee3/Sharanya-Chola-AACA.jpg",
-  "https://www.zangcenter.com/wp-content/uploads/2024/04/ZCC_Hiral-Shah_Headshot_231019-640x800.jpg",
-];
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 export default function Page() {
   return (
-    <div
-      className={`${workSans.className} bg-[#FCFAF8] text-[#2A2118]`}
-    >
+    <div className={`${workSans.className} bg-[#E8EFE9] text-[#2C3A35] min-h-screen`}>
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#F5EFE8] border-b border-[#E9E2DC]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 flex items-center justify-between h-16">
-          <Link href="/" className={`${raleway.className} text-xl font-bold text-[#2D3B5A]`}>
+      <header className="sticky top-0 z-50 bg-[#F5FAF6] border-b border-[#C8B171] shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-0 h-16 flex items-center justify-between">
+          <span className={`${lora.className} text-2xl md:text-3xl text-[#7A1C2B] font-bold`}>
             Jain Sales
-          </Link>
-          <a href="tel:+918802692420" className={buttonClasses}>
-            <Phone size={18} className="mr-2" /> 088026 92420
+          </span>
+          <a
+            href="tel:08802692420"
+            className="flex items-center gap-2 text-[#7A1C2B] hover:text-[#5f1522] transition-colors font-medium"
+          >
+            <Phone size={18} />
+            <span className="hidden sm:inline">088026 92420</span>
           </a>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <FadeInOnScroll className="lg:col-span-5 relative aspect-[4/5] rounded-[4px] overflow-hidden border border-[#E9E2DC] shadow-[0_1px_3px_rgba(45,35,21,0.05)]">
+      <main>
+        {/* Hero */}
+        <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
           <Image
-            src={images[0]}
-            alt="Latest fashion collection display"
+            src="https://lh3.googleusercontent.com/SuMqXYuVPyZm7eNpzVOpD6fQ-20Bh9vJKCRd_Yrh3NUXV2njF9S4za9Xb-AMKnKAO6_uTSflWFr53yaR4LxywlXbEV_H=w300-rw"
+            alt="Jain Sales latest fashion collection"
             fill
             className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 40vw"
             priority
           />
-          {/* Decorative pleat fold border */}
-          <div className="absolute inset-0 border-2 border-[#2D3B5A] opacity-10 rounded-[4px] pointer-events-none" />
-        </FadeInOnScroll>
-        <FadeInOnScroll delay={0.1} className="lg:col-span-7 lg:pl-8">
-          <h1 className={`${raleway.className} text-4xl md:text-5xl font-bold text-[#2D3B5A] leading-tight mb-4`}>
-            Discover the Latest Trends in Women&apos;s Fashion & Ethnic Wear
-          </h1>
-          <p className="text-lg text-[#7A6D6A] max-w-prose mb-8">
-            At Jain Sales, we bring you carefully curated collections that blend modern styles with timeless ethnic elegance. 
-            Step into our Shahdara store or explore our range online.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#services" className={buttonClasses}>
-              Explore Collections
-            </a>
-            <a
-              href="https://maps.google.com/?q=Jain+Sales+Swami+Amardev+Marg+Bhola+Nath+Nagar+Pathan+Pura+Shahdara+Delhi+110032"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center border border-[#2D3B5A] text-[#2D3B5A] hover:bg-[#2D3B5A] hover:text-[#FCFAF8] font-bold rounded-[4px] py-3 px-4 transition-colors"
-            >
-              <MapPin size={18} className="mr-2" /> Visit Store
-            </a>
-          </div>
-        </FadeInOnScroll>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="bg-[#F5EFE8] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-          <FadeInOnScroll className="text-center mb-12">
-            <h2 className={`${raleway.className} text-3xl md:text-4xl font-bold text-[#2D3B5A]`}>
-              What We Offer
-            </h2>
-            <p className="text-[#7A6D6A] mt-3 max-w-xl mx-auto">
-              From daily wear to festive collections, we ensure quality, comfort, and style.
+          <div className="absolute inset-0 bg-gradient-to-r from-[#7A1C2B]/70 to-[#7A1C2B]/20" />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative z-10 flex flex-col justify-center h-full max-w-7xl mx-auto px-4 md:px-8 xl:px-0 text-white"
+          >
+            <h1 className={`${lora.className} text-4xl md:text-6xl xl:text-7xl font-bold leading-tight max-w-2xl`}>
+              Discover the Latest Trends in Women's Fashion & Ethnic Wear
+            </h1>
+            <p className="mt-4 text-lg md:text-xl text-[#D4AF37] max-w-xl">
+              Curated elegance with Banarasi soul — right in Shahdara.
             </p>
-          </FadeInOnScroll>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {services.map((service, index) => (
-              <FadeInOnScroll key={index} delay={index * 0.05}>
-                <div className="bg-[#FCFAF8] border border-[#E9E2DC] rounded-[4px] p-4 shadow-[0_1px_3px_rgba(45,35,21,0.05)] hover:shadow-[0_4px_12px_rgba(45,35,21,0.08)] transition-shadow text-center flex flex-col items-center gap-3">
-                  <service.icon size={28} className="text-[#C2726A]" />
-                  <span className="text-sm font-medium text-[#2A2118] leading-snug">{service.title}</span>
-                </div>
-              </FadeInOnScroll>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery / Collections Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-16">
-        <FadeInOnScroll className="text-center mb-12">
-          <h2 className={`${raleway.className} text-3xl md:text-4xl font-bold text-[#2D3B5A]`}>
-            Our Collection
-          </h2>
-          <p className="text-[#7A6D6A] mt-3 max-w-lg mx-auto">
-            A glimpse of what awaits you at Jain Sales — fresh arrivals and timeless staples.
-          </p>
-        </FadeInOnScroll>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {images.slice(1, 5).map((src, i) => (
-            <FadeInOnScroll key={i} delay={i * 0.1}>
-              <div className="relative aspect-[3/4] rounded-[4px] overflow-hidden border border-[#E9E2DC] shadow-[0_2px_6px_rgba(45,35,21,0.04)] hover:shadow-[0_4px_12px_rgba(45,35,21,0.08)] transition-shadow bg-[#F5EFE8]">
-                <Image
-                  src={src}
-                  alt={`Collection item ${i + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                />
-              </div>
-            </FadeInOnScroll>
-          ))}
-        </div>
-      </section>
-
-      {/* Customer Reviews */}
-      <section className="bg-[#2D3B5A] py-16 text-[#FCFAF8]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-          <FadeInOnScroll className="text-center mb-12">
-            <h2 className={`${raleway.className} text-3xl md:text-4xl font-bold text-white`}>
-              What Our Customers Say
-            </h2>
-            <div className="flex items-center justify-center gap-2 mt-2">
-              <StarRating rating={5} />
-              <span className="text-sm text-[#F5EFE8]">4.8 (42 reviews)</span>
-            </div>
-          </FadeInOnScroll>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review, idx) => (
-              <FadeInOnScroll key={idx} delay={idx * 0.05}>
-                <blockquote className="bg-[#F5EFE8] text-[#2A2118] rounded-[4px] p-5 shadow-[0_2px_6px_rgba(0,0,0,0.08)] flex flex-col h-full">
-                  <StarRating rating={review.rating} />
-                  <p className="mt-3 text-sm leading-relaxed flex-1">{review.text}</p>
-                  <footer className="mt-4 text-xs text-[#7A6D6A] border-t border-[#E9E2DC] pt-3">
-                    — Customer, {review.time}
-                  </footer>
-                </blockquote>
-              </FadeInOnScroll>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact / Footer */}
-      <footer className="bg-[#F5EFE8] border-t border-[#E9E2DC] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <FadeInOnScroll>
-            <h3 className={`${raleway.className} text-xl font-bold text-[#2D3B5A] mb-3`}>Jain Sales</h3>
-            <p className="text-sm text-[#7A6D6A]">
-              Discover the latest women’s fashion and ethnic wear in Shahdara, Delhi. Quality fabrics, comfortable styles, 
-              and personalized assistance.
-            </p>
-          </FadeInOnScroll>
-          <FadeInOnScroll delay={0.1}>
-            <h4 className={`${raleway.className} font-semibold text-[#2A2118] mb-2`}>Visit Us</h4>
-            <address className="not-italic text-sm text-[#7A6D6A] space-y-2">
-              <p className="flex items-start gap-2">
-                <MapPin size={16} className="mt-0.5 text-[#C2726A] flex-shrink-0" />
-                Swami Amardev Marg, Bhola Nath Nagar, Pathan Pura, Shahdara, Delhi, 110032
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone size={16} className="text-[#C2726A]" />
-                <a href="tel:+918802692420" className="hover:text-[#C2726A] underline underline-offset-2">
-                  088026 92420
-                </a>
-              </p>
-            </address>
-          </FadeInOnScroll>
-          <FadeInOnScroll delay={0.2}>
-            <h4 className={`${raleway.className} font-semibold text-[#2A2118] mb-2`}>Store Hours</h4>
-            <p className="text-sm text-[#7A6D6A]">
-              Mon – Sat: 10:30 AM – 8:30 PM<br />
-              Sun: 11:00 AM – 7:00 PM
-            </p>
-            <div className="mt-4">
-              <a href="#services" className={buttonClasses}>
-                View Collections
+            <div className="mt-8 flex gap-4 flex-wrap">
+              <a
+                href="tel:08802692420"
+                className="inline-flex items-center gap-2 bg-[#7A1C2B] text-white px-6 py-3 rounded-sm font-medium tracking-wide hover:bg-[#6B1925] transition-colors shadow-md"
+              >
+                <Phone size={18} /> Call Now
+              </a>
+              <a
+                href="#collection"
+                className="inline-flex items-center gap-2 border border-[#D4AF37] text-[#D4AF37] px-6 py-3 rounded-sm font-medium tracking-wide hover:bg-[#D4AF37]/10 transition-colors"
+              >
+                Explore Collection
               </a>
             </div>
-          </FadeInOnScroll>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 mt-8 pt-6 border-t border-[#E9E2DC] text-center text-xs text-[#7A6D6A]">
-          © {new Date().getFullYear()} Jain Sales. All rights reserved.
-        </div>
+          </motion.div>
+        </section>
+
+        {/* Collection Swatch Book Grid */}
+        <section id="collection" className="py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12 md:mb-16"
+            >
+              <h2 className={`${lora.className} text-4xl md:text-5xl text-[#7A1C2B]`}>
+                The Swatch Room
+              </h2>
+              <p className="mt-3 text-[#6E6259] text-lg max-w-2xl mx-auto">
+                A tactile edit of our most beloved silhouettes — like a tailor's swatch book come to life.
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              className="grid grid-cols-4 md:grid-cols-8 xl:grid-cols-12 gap-3 md:gap-6"
+            >
+              <motion.div
+                variants={itemVariants}
+                className="col-span-4 md:col-span-4 xl:col-span-6 row-span-2 relative group bg-[#F5FAF6] border border-[#C8B171] rounded-sm overflow-hidden hover:shadow-md transition-shadow duration-150"
+              >
+                <div className="relative w-full h-80 md:h-96">
+                  <Image
+                    src="https://d1k13df5m14swc.cloudfront.net/7e89f2ac-a394-4980-92c5-1da969614dd3zoom.jpg"
+                    alt="Ethnic wear collection"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#7A1C2B]/80 to-transparent p-4">
+                  <span className="text-white font-medium text-sm md:text-base tracking-wide">Ethnic Suits</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="col-span-2 md:col-span-4 xl:col-span-3 relative group bg-[#F5FAF6] border border-[#C8B171] rounded-sm overflow-hidden hover:shadow-md transition-shadow duration-150"
+              >
+                <div className="relative w-full h-60 md:h-72">
+                  <Image
+                    src="https://www.philipdavidcompany.com/wp-content/uploads/2026/JILZARAH-2026%20Outlet%20Catalog-cover.jpg"
+                    alt="Western wear collection"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#7A1C2B]/80 to-transparent p-3">
+                  <span className="text-white font-medium text-sm">Western Wear</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="col-span-2 md:col-span-4 xl:col-span-3 relative group bg-[#F5FAF6] border border-[#C8B171] rounded-sm overflow-hidden hover:shadow-md transition-shadow duration-150"
+              >
+                <div className="relative w-full h-60 md:h-72">
+                  <Image
+                    src="https://images.squarespace-cdn.com/content/v1/5c3e86153e2d094cd36322ab/86c3b40b-fb1e-469f-9430-715f6a3a8ee3/Sharanya-Chola-AACA.jpg"
+                    alt="Dress collection"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#7A1C2B]/80 to-transparent p-3">
+                  <span className="text-white font-medium text-sm">Dresses</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="col-span-2 md:col-span-4 xl:col-span-3 relative group bg-[#F5FAF6] border border-[#C8B171] rounded-sm overflow-hidden hover:shadow-md transition-shadow duration-150"
+              >
+                <div className="relative w-full h-60 md:h-72">
+                  <Image
+                    src="https://www.zangcenter.com/wp-content/uploads/2024/04/ZCC_Hiral-Shah_Headshot_231019-640x800.jpg"
+                    alt="Accessories and styling"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#7A1C2B]/80 to-transparent p-3">
+                  <span className="text-white font-medium text-sm">Accessories</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="col-span-2 md:col-span-4 xl:col-span-3 relative group bg-[#F5FAF6] border border-[#C8B171] rounded-sm overflow-hidden hover:shadow-md transition-shadow duration-150"
+              >
+                <div className="relative w-full h-60 md:h-72">
+                  <Image
+                    src="https://d1k13df5m14swc.cloudfront.net/7e89f2ac-a394-4980-92c5-1da969614dd3zoom.jpg"
+                    alt="Bridal collection"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#7A1C2B]/80 to-transparent p-3">
+                  <span className="text-white font-medium text-sm">Bridal</span>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Services */}
+        <section id="services" className="py-16 md:py-24 bg-[#F5FAF6]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12 md:mb-16"
+            >
+              <h2 className={`${lora.className} text-4xl md:text-5xl text-[#7A1C2B]`}>
+                The Jain Promise
+              </h2>
+              <p className="mt-3 text-[#6E6259] text-lg max-w-xl mx-auto">
+                From fabric to fit, we craft the experience around you.
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {services.map((svc) => {
+                const Icon = svc.icon;
+                return (
+                  <motion.div
+                    key={svc.title}
+                    variants={itemVariants}
+                    className="bg-[#E8EFE9] border border-[#C8B171] rounded-sm p-6 flex flex-col items-start gap-3 hover:shadow-md transition-shadow duration-150"
+                  >
+                    <div className="w-10 h-10 flex items-center justify-center rounded-sm bg-[#7A1C2B] text-[#D4AF37]">
+                      <Icon size={20} />
+                    </div>
+                    <h3 className={`${lora.className} text-xl text-[#2C3A35]`}>{svc.title}</h3>
+                    <p className="text-[#6E6259] leading-relaxed text-sm md:text-base">{svc.desc}</p>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Reviews */}
+        <section id="reviews" className="py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12 md:mb-16"
+            >
+              <h2 className={`${lora.className} text-4xl md:text-5xl text-[#7A1C2B]`}>
+                Loved by Shahdara
+              </h2>
+              <div className="flex items-center justify-center mt-3 gap-2">
+                <span className={`${lora.className} text-3xl text-[#D4AF37] font-bold`}>4.8</span>
+                <StarRating rating={5} />
+                <span className="text-[#6E6259] text-sm">(42 reviews)</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+            >
+              {reviews.map((r, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={itemVariants}
+                  className="bg-[#F5FAF6] border border-[#C8B171] rounded-sm p-6 flex flex-col gap-3 hover:shadow-md transition-shadow duration-150"
+                >
+                  <StarRating rating={r.rating} />
+                  <p className="text-[#2C3A35] leading-relaxed italic text-sm md:text-base">
+                    “{r.text}”
+                  </p>
+                  <span className="text-[#6E6259] text-xs mt-auto">{r.date}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section className="py-16 md:py-24 bg-[#F5FAF6] border-t border-[#C8B171]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="max-w-2xl mx-auto text-center"
+            >
+              <h2 className={`${lora.className} text-4xl md:text-5xl text-[#7A1C2B]`}>
+                Visit Us
+              </h2>
+              <div className="mt-8 space-y-6 text-[#2C3A35]">
+                <div className="flex items-start justify-center gap-3">
+                  <MapPin size={20} className="text-[#D4AF37] mt-1 shrink-0" />
+                  <p className="text-left">
+                    Swami Amardev Marg, Bhola Nath Nagar, Pathan Pura,<br />
+                    Shahdara, Delhi, 110032, India
+                  </p>
+                </div>
+                <div className="flex items-center justify-center gap-3">
+                  <Phone size={20} className="text-[#D4AF37] shrink-0" />
+                  <a
+                    href="tel:08802692420"
+                    className="hover:text-[#7A1C2B] underline underline-offset-4 transition-colors"
+                  >
+                    088026 92420
+                  </a>
+                </div>
+                <div className="flex items-center justify-center gap-2 text-[#D4AF37]">
+                  <StarRating rating={5} />
+                  <span className="text-[#6E6259] text-sm ml-1">4.8 (42 reviews)</span>
+                </div>
+              </div>
+              <motion.a
+                href="tel:08802692420"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="mt-8 inline-flex items-center gap-2 bg-[#7A1C2B] text-white px-6 py-3 rounded-sm font-medium tracking-wide hover:bg-[#6B1925] transition-colors shadow-md"
+              >
+                <Phone size={18} /> Call Now
+              </motion.a>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-[#7A1C2B] text-[#E8EFE9] py-6 text-center text-sm">
+        <p className="tracking-wide">
+          &copy; {new Date().getFullYear()} Jain Sales. All rights reserved.
+        </p>
+        <p className="mt-1 text-[#C8B171]">
+          Crafted with care in Shahdara, Delhi
+        </p>
       </footer>
     </div>
   );
