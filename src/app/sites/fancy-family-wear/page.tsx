@@ -1,395 +1,342 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Rubik, Josefin_Sans } from "next/font/google";
-import {
-  Phone,
-  MapPin,
-  Star,
-  Users,
-  Shirt,
-  Baby,
-  Palette,
-  Gem,
-  Quote,
-} from "lucide-react";
+import { Neuton, Work_Sans } from "next/font/google";
+import { Star, Phone, MapPin } from "lucide-react";
 
-const rubik = Rubik({
+const neuton = Neuton({
+  weight: ["400", "700"],
   subsets: ["latin"],
-  variable: "--font-rubik",
+  variable: "--font-neuton",
 });
 
-const josefin = Josefin_Sans({
+const workSans = Work_Sans({
   subsets: ["latin"],
-  variable: "--font-josefin",
+  variable: "--font-work-sans",
 });
-
-const FadeInUp = ({
-  children,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-      transition={{ duration: 0.6, ease: "easeOut", delay }}
-    >
-      {children}
-    </motion.div>
-  );
-};
 
 const reviews = [
   {
-    stars: 5,
     text: "Good place to purchase clothes for every age at good price. You will find many varieties and fabrics here.Staff is also cooperative.I visited here to purchase kurta for myself. The sales person served me about 25-30 choices with different colours and fabrics. The best part about this shop is their price range is very pocket friendly..",
+    time: "4 years ago",
   },
   {
-    stars: 5,
     text: "Very good quality clothes. Nature of staff is very polite as well.Excellent service and also reasonable price.100% recommended for everyone. Don't think much about it just walk in the store and experience it yourself.",
+    time: "4 years ago",
   },
   {
-    stars: 5,
     text: "Our go to family wear shop best clothing in reasonable price. We've been a customer for about 15 years now. Best for Grooms complete outfit and Accessories.",
+    time: "4 years ago",
   },
   {
-    stars: 5,
     text: "Highly recommend shop for any kind of clothing. Fair prices. And the bestest quality you can get in shahdara. Their clothes never disappoints.",
+    time: "4 years ago",
   },
   {
-    stars: 5,
     text: "Amazing shop, the quality of the fabric is really good and the designs are mind blowing. I really suggest visiting the store, you will not regret it trust me on this one!!!",
+    time: "4 years ago",
   },
 ];
 
-export default function Page() {
+const services = [
+  "Family Clothing (for all ages)",
+  "Men's Wear (Kurtas, Groom's Outfits)",
+  "Women's Wear",
+  "Kids' Clothing",
+  "Wide Variety of Fabrics & Designs",
+  "Fashion Accessories",
+];
+
+const galleryImages = [
+  {
+    src: "https://content3.jdmagicbox.com/v2/comp/delhi/d8/011pxx11.xx11.160113191617.m9d8/catalogue/fancy-family-wear-shahdara-delhi-baby-readymade-garment-retailers-bo23b3x6ri.jpg",
+    alt: "Baby and kids clothing display",
+  },
+  {
+    src: "https://content3.jdmagicbox.com/v2/comp/delhi/d8/011pxx11.xx11.160113191617.m9d8/catalogue/fancy-family-wear-shahdara-delhi-readymade-garment-retailers-2klr8z6.jpg",
+    alt: "Men's wear and accessories section",
+  },
+  {
+    src: "https://img.magicpin.com/7467844_store_images_27.jpg",
+    alt: "Women's ethnic and party wear collection",
+  },
+  {
+    src: "https://img.magicpin.com/7467844_store_images_23.jpg",
+    alt: "Fabric rolls and design variety",
+  },
+  {
+    src: "https://img.magicpin.com/7467844_store_images_66.jpg",
+    alt: "Groom's collection and sherwani display",
+  },
+];
+
+const Divider = () => (
+  <div className="flex items-center w-full my-16 lg:my-24">
+    <div className="flex-grow border-t border-[#D6CDC0]" />
+    <div className="mx-4 w-2 h-2 bg-[#C5923E] rotate-45" />
+    <div className="flex-grow border-t border-[#D6CDC0]" />
+  </div>
+);
+
+export default function HomePage() {
   return (
-    <div className={`${rubik.variable} ${josefin.variable} bg-[#9C9A9A] min-h-screen`}>
+    <div
+      className={`${neuton.variable} ${workSans.variable} font-[family-name:var(--font-work-sans)] bg-[#F8F5ED] text-[#2D221F]`}
+    >
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#9C9A9A]/90 backdrop-blur-md border-b border-[#464646]/20">
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 h-16 flex items-center justify-between">
-          <div className={`text-2xl font-semibold text-[#000] ${rubik.className}`}>
+      <header className="sticky top-0 z-50 bg-[#F8F5ED]/90 backdrop-blur border-b border-[#D6CDC0]">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-12 flex items-center justify-between h-16">
+          <span className={`font-[family-name:var(--font-neuton)] text-xl md:text-2xl font-bold text-[#2D221F]`}>
             Fancy Family Wear
-          </div>
+          </span>
           <a
             href="tel:09958843734"
-            className={`inline-flex items-center gap-2 px-4 py-2 bg-[#A35E47] text-white rounded-md font-medium text-sm ${rubik.className} hover:bg-[#8D4F3B] transition-colors`}
+            className="inline-flex items-center gap-2 text-[#6A5E52] hover:text-[#C5923E] transition-colors"
           >
-            <Phone size={18} />
-            <span>Call Now</span>
+            <Phone className="w-4 h-4" />
+            <span className="hidden sm:inline text-sm md:text-base">099588 43734</span>
           </a>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="pt-16">
-        {/* Hero Section */}
-        <section className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-16 lg:py-28 grid lg:grid-cols-2 gap-10 items-center">
-          <FadeInUp>
-            <div className="space-y-6">
-              <h1
-                className={`text-4xl md:text-5xl lg:text-[56px] font-bold leading-[1.2] text-[#000] ${rubik.className}`}
-              >
-                Fashion for Every Family Member, Quality You Can Trust.
-              </h1>
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={20}
-                      fill="#A35E47"
-                      stroke="#A35E47"
-                      className="drop-shadow-sm"
-                    />
-                  ))}
-                </div>
-                <span className={`text-sm text-[#464646] ${josefin.className}`}>
-                  4.9 (15 reviews)
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href="tel:09958843734"
-                  className={`px-5 py-3 bg-[#A35E47] text-white rounded-md font-medium ${rubik.className} hover:bg-[#8D4F3B] transition-colors inline-flex items-center gap-2`}
-                >
-                  <Phone size={18} />
-                  <span>099588 43734</span>
-                </a>
-                <a
-                  href="#visit"
-                  className={`px-5 py-3 border-2 border-[#464646] text-[#464646] rounded-md font-medium ${rubik.className} hover:bg-[#464646]/10 transition-colors inline-flex items-center gap-2`}
-                >
-                  <MapPin size={18} />
-                  <span>Visit Us</span>
-                </a>
-              </div>
-            </div>
-          </FadeInUp>
-          <FadeInUp delay={0.2}>
-            <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg border border-[#464646]/20 shadow-lg">
-              <Image
-                src="https://content3.jdmagicbox.com/v2/comp/delhi/d8/011pxx11.xx11.160113191617.m9d8/catalogue/fancy-family-wear-shahdara-delhi-baby-readymade-garment-retailers-bo23b3x6ri.jpg"
-                alt="Fancy Family Wear store front"
-                fill
-                className="object-cover"
-                unoptimized
-              />
-            </div>
-          </FadeInUp>
-        </section>
-
-        {/* Trust badge + Address */}
-        <section className="bg-[#9C9A9A] border-t border-b border-[#464646]/10 py-12">
-          <div className="max-w-[720px] mx-auto px-4 md:px-6 text-center space-y-4">
-            <FadeInUp>
-              <span
-                className={`inline-block px-4 py-1.5 text-sm font-medium uppercase tracking-wide text-[#A35E47] border border-[#A35E47]/30 rounded-full ${rubik.className}`}
-              >
-                Trusted for 15+ Years
-              </span>
-            </FadeInUp>
-            <FadeInUp delay={0.1}>
-              <p className={`text-lg text-[#000] leading-relaxed ${josefin.className}`}>
-                We’ve been dressing families in Shahdara since 2009, offering
-                quality fabrics, honest prices, and a personal touch that makes
-                every visit special.
-              </p>
-            </FadeInUp>
-          </div>
-        </section>
-
-        {/* Services Grid */}
-        <section className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-16 lg:py-24">
-          <FadeInUp>
-            <h2
-              className={`text-3xl md:text-4xl font-semibold text-[#000] mb-12 text-center ${rubik.className}`}
-            >
-              What We Offer
-            </h2>
-          </FadeInUp>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <Users size={24} />,
-                title: "Family Clothing",
-                desc: "Complete wardrobe for every generation — together.",
-              },
-              {
-                icon: <Shirt size={24} />,
-                title: "Men’s Wear",
-                desc: "Kurtas, groom’s outfits & timeless classics.",
-              },
-              {
-                icon: <Shirt size={24} className="rotate-45" />,
-                title: "Women’s Wear",
-                desc: "Elegant styles for daily wear & special occasions.",
-              },
-              {
-                icon: <Baby size={24} />,
-                title: "Kids’ Clothing",
-                desc: "Comfortable, playful designs they’ll love.",
-              },
-              {
-                icon: <Palette size={24} />,
-                title: "Wide Variety",
-                desc: "Fabrics, colours, and designs to suit every taste.",
-              },
-              {
-                icon: <Gem size={24} />,
-                title: "Accessories",
-                desc: "Fashion accents to complete the look.",
-              },
-            ].map((service, idx) => (
-              <FadeInUp key={idx} delay={idx * 0.1}>
-                <div className="group bg-[#9C9A9A] border border-[#464646]/20 rounded-lg p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
-                  <div className="w-10 h-10 flex items-center justify-center rounded-md bg-[#A35E47]/10 text-[#A35E47] mb-4">
-                    {service.icon}
-                  </div>
-                  <h3 className={`text-xl font-medium text-[#000] mb-2 ${rubik.className}`}>
-                    {service.title}
-                  </h3>
-                  <p className={`text-[#464646] text-sm leading-relaxed ${josefin.className}`}>
-                    {service.desc}
-                  </p>
-                </div>
-              </FadeInUp>
-            ))}
-          </div>
-        </section>
-
-        {/* Groom's Highlight */}
-        <section className="bg-[#9C9A9A] border-t border-b border-[#464646]/10 py-16 lg:py-24">
-          <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 flex flex-col lg:flex-row gap-10 items-center lg:items-start">
-            <FadeInUp>
-              <div className="relative w-full lg:w-1/2 aspect-[4/3] overflow-hidden rounded-lg border border-[#464646]/20">
-                <Image
-                  src="https://content3.jdmagicbox.com/v2/comp/delhi/d8/011pxx11.xx11.160113191617.m9d8/catalogue/fancy-family-wear-shahdara-delhi-readymade-garment-retailers-2klr8z6.jpg"
-                  alt="Groom's outfit display"
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            </FadeInUp>
-            <FadeInUp delay={0.2}>
-              <div className="lg:w-1/2 space-y-6">
-                <span
-                  className={`inline-block px-3 py-1 text-xs font-medium uppercase tracking-wider text-[#A35E47] border border-[#A35E47]/30 rounded-full ${rubik.className}`}
-                >
-                  Groom’s Outfit Special
-                </span>
-                <blockquote className={`relative text-xl md:text-2xl text-[#000] leading-relaxed ${josefin.className}`}>
-                  <span className="absolute left-0 top-0 -translate-x-2 -translate-y-4 text-[#A35E47] text-5xl leading-none">
-                    “
-                  </span>
-                  <p className="pl-6">
-                    {reviews[2].text}
-                  </p>
-                </blockquote>
-                <p className={`text-sm text-[#464646] ${josefin.className}`}>
-                  — Loyal customer for 15 years
-                </p>
-                <a
-                  href="tel:09958843734"
-                  className={`inline-flex items-center gap-2 px-5 py-3 bg-[#A35E47] text-white rounded-md font-medium ${rubik.className} hover:bg-[#8D4F3B] transition-colors`}
-                >
-                  <Phone size={18} />
-                  <span>Enquire Now</span>
-                </a>
-              </div>
-            </FadeInUp>
-          </div>
-        </section>
-
-        {/* Product Showcase with Images */}
-        <section className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-16 lg:py-24">
-          <FadeInUp>
-            <h2
-              className={`text-3xl md:text-4xl font-semibold text-[#000] mb-12 text-center ${rubik.className}`}
-            >
-              A Glimpse Inside
-            </h2>
-          </FadeInUp>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                src: "https://img.magicpin.com/7467844_store_images_27.jpg",
-                alt: "Colourful fabric selection",
-              },
-              {
-                src: "https://img.magicpin.com/7467844_store_images_23.jpg",
-                alt: "Men's traditional collection",
-              },
-              {
-                src: "https://img.magicpin.com/7467844_store_images_66.jpg",
-                alt: "Kids' clothing range",
-              },
-            ].map((img, idx) => (
-              <FadeInUp key={idx} delay={idx * 0.15}>
-                <div className="relative w-full aspect-square overflow-hidden rounded-lg border border-[#464646]/20 group hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
-              </FadeInUp>
-            ))}
-          </div>
-        </section>
-
-        {/* Testimonials Carousel (all 5) */}
-        <section className="bg-[#9C9A9A] border-t border-b border-[#464646]/10 py-16 lg:py-24">
-          <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10">
-            <FadeInUp>
-              <h2
-                className={`text-3xl md:text-4xl font-semibold text-[#000] mb-12 text-center ${rubik.className}`}
-              >
-                What Our Customers Say
-              </h2>
-            </FadeInUp>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {reviews.map((review, idx) => (
-                <FadeInUp key={idx} delay={idx * 0.1}>
-                  <div className="bg-[#9C9A9A] border border-[#464646]/20 rounded-lg p-6 h-full flex flex-col justify-between">
-                    <div>
-                      <div className="flex mb-3">
-                        {[...Array(review.stars)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={16}
-                            fill="#A35E47"
-                            stroke="#A35E47"
-                          />
-                        ))}
-                      </div>
-                      <p className={`text-[#000] text-base leading-relaxed italic ${josefin.className}`}>
-                        “{review.text}”
-                      </p>
-                    </div>
-                    <div className={`mt-4 text-xs text-[#464646] ${josefin.className}`}>
-                      Verified Customer • 4 years ago
-                    </div>
-                  </div>
-                </FadeInUp>
+      {/* Hero */}
+      <section className="relative w-full h-[90vh] min-h-[600px] overflow-hidden">
+        <Image
+          src={galleryImages[0].src}
+          alt="Fancy Family Wear store interior"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2D221F]/80 via-[#2D221F]/30 to-transparent" />
+        <div className="relative z-10 flex flex-col justify-end h-full max-w-[1200px] mx-auto px-4 md:px-6 lg:px-12 pb-16 md:pb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-4 md:space-y-6"
+          >
+            <h1 className="font-[family-name:var(--font-neuton)] text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+              Fashion for Every Family Member,
+              <br />
+              Quality You Can Trust.
+            </h1>
+            <div className="flex items-center gap-2 text-[#C5923E]">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="w-5 h-5 fill-current" />
               ))}
+              <span className="text-white/80 text-sm md:text-base ml-2">4.9 (15 reviews)</span>
             </div>
-          </div>
-        </section>
+            <a
+              href="https://maps.google.com/?q=Shop+No.+127+Chotta+Bazar+Shahdara+Delhi+110032"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#C5923E] hover:bg-[#A87B2E] text-[#2D221F] font-medium px-6 py-3 rounded-[4px] transition-colors text-sm md:text-base"
+            >
+              <MapPin className="w-4 h-4" />
+              Visit Our Store
+            </a>
+          </motion.div>
+        </div>
+      </section>
 
-        {/* Visit / Contact Section */}
-        <section id="visit" className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-16 lg:py-24 text-center">
-          <FadeInUp>
-            <div className="flex flex-col items-center space-y-6">
-              <MapPin
-                size={48}
-                className="text-[#A35E47]"
-                strokeWidth={1.5}
-              />
-              <h2
-                className={`text-3xl md:text-4xl font-semibold text-[#000] ${rubik.className}`}
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-12">
+        <Divider />
+
+        {/* About */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row items-center gap-8 md:gap-12"
+        >
+          <div className="flex-1 space-y-4 md:space-y-6">
+            <h2 className="font-[family-name:var(--font-neuton)] text-3xl md:text-4xl font-bold text-[#2D221F]">
+              A Shahdara Legacy Since 2010
+            </h2>
+            <p className="text-[#6A5E52] leading-relaxed">
+              Located in the heart of Chotta Bazar, Fancy Family Wear has dressed generations with
+              unmatched fabric quality and pocket‑friendly prices. From a groom’s first sherwani to a
+              child’s festive lehnga, we weave trust into every thread. Step inside and experience
+              the warmth of 15 years of family styling.
+            </p>
+            <a
+              href="tel:09958843734"
+              className="inline-flex items-center gap-2 border border-[#C5923E] text-[#C5923E] hover:bg-[#C5923E] hover:text-[#2D221F] font-medium px-5 py-2.5 rounded-[4px] transition-colors text-sm md:text-base"
+            >
+              <Phone className="w-4 h-4" />
+              Call Now
+            </a>
+          </div>
+          <div className="flex-1 relative w-full aspect-[4/3] rounded-[8px] overflow-hidden border border-[#D6CDC0] shadow-[0_2px_8px_rgba(45,34,31,0.05)]">
+            <Image
+              src={galleryImages[4].src}
+              alt="Groom collection display"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </motion.section>
+
+        <Divider />
+
+        {/* Services */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="font-[family-name:var(--font-neuton)] text-3xl md:text-4xl font-bold text-[#2D221F] text-center mb-8 md:mb-12">
+            What We Offer
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-[8px] border border-[#D6CDC0] shadow-[0_2px_8px_rgba(45,34,31,0.05)] p-6 hover:border-[#C5923E] transition-colors"
               >
-                Visit Us Today
-              </h2>
-              <address className={`text-lg text-[#000] not-italic leading-relaxed ${josefin.className}`}>
-                Shop No. 127, छोटा बाजार, Chotta Bazar, Shahdara,<br />
-                Delhi, 110032, India
-              </address>
+                <div className="w-10 h-10 rounded-[4px] bg-[#F8F5ED] flex items-center justify-center mb-4">
+                  <Star className="w-5 h-5 text-[#C5923E] fill-current" />
+                </div>
+                <p className="text-[#2D221F] font-medium text-lg">{service}</p>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        <Divider />
+
+        {/* Gallery */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="font-[family-name:var(--font-neuton)] text-3xl md:text-4xl font-bold text-[#2D221F] text-center mb-8 md:mb-12">
+            Our Collection
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {galleryImages.map((img, idx) => (
+              <div
+                key={idx}
+                className="relative aspect-square rounded-[8px] overflow-hidden border border-[#D6CDC0] shadow-[0_2px_8px_rgba(45,34,31,0.05)]"
+              >
+                <Image src={img.src} alt={img.alt} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        <Divider />
+
+        {/* Testimonials */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="font-[family-name:var(--font-neuton)] text-3xl md:text-4xl font-bold text-[#2D221F] text-center mb-8 md:mb-12">
+            What Our Customers Say
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {reviews.map((review, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-[8px] border border-[#D6CDC0] shadow-[0_2px_8px_rgba(45,34,31,0.05)] p-6 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-1 mb-3">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-[#C5923E] fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-[#2D221F] leading-relaxed text-sm md:text-base">{`"${review.text}"`}</p>
+                </div>
+                <div className="mt-4 text-xs text-[#6A5E52] text-right">{review.time}</div>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        <Divider />
+
+        {/* Contact */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col lg:flex-row gap-12"
+        >
+          <div className="flex-1 space-y-6">
+            <h2 className="font-[family-name:var(--font-neuton)] text-3xl md:text-4xl font-bold text-[#2D221F]">
+              Reach Out to Us
+            </h2>
+            <div className="space-y-4">
+              <a
+                href="https://maps.google.com/?q=Shop+No.+127+Chotta+Bazar+Shahdara+Delhi+110032"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 text-[#6A5E52] hover:text-[#C5923E] transition-colors"
+              >
+                <MapPin className="w-5 h-5 mt-0.5 shrink-0" />
+                <span>
+                  Shop No. 127, छोटा बाजार, Chotta Bazar, Shahdara, Delhi, 110032, India
+                </span>
+              </a>
               <a
                 href="tel:09958843734"
-                className={`inline-flex items-center gap-2 px-6 py-3 bg-[#A35E47] text-white rounded-md font-medium ${rubik.className} hover:bg-[#8D4F3B] transition-colors`}
+                className="flex items-center gap-3 text-[#6A5E52] hover:text-[#C5923E] transition-colors"
               >
-                <Phone size={20} />
-                <span className="text-lg">099588 43734</span>
+                <Phone className="w-5 h-5 shrink-0" />
+                <span>099588 43734</span>
               </a>
-              <p className={`text-sm text-[#464646] ${josefin.className}`}>
-                Walk in or call — we’d love to help you find the perfect outfit.
-              </p>
             </div>
-          </FadeInUp>
-        </section>
-
-        {/* Footer */}
-        <footer className="border-t border-[#464646]/20 py-8">
-          <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 text-center">
-            <p className={`text-sm text-[#464646] ${josefin.className}`}>
-              © {new Date().getFullYear()} Fancy Family Wear. All rights reserved.
-            </p>
           </div>
-        </footer>
-      </main>
+          <form className="flex-1 bg-white rounded-[8px] border border-[#D6CDC0] shadow-[0_2px_8px_rgba(45,34,31,0.05)] p-6 space-y-4">
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="w-full rounded-[4px] border border-[#D6CDC0] px-4 py-2.5 text-[#2D221F] placeholder-[#6A5E52] focus:outline-none focus:ring-2 focus:ring-[#C5923E] focus:ring-offset-2"
+            />
+            <input
+              type="email"
+              placeholder="Email Address"
+              className="w-full rounded-[4px] border border-[#D6CDC0] px-4 py-2.5 text-[#2D221F] placeholder-[#6A5E52] focus:outline-none focus:ring-2 focus:ring-[#C5923E] focus:ring-offset-2"
+            />
+            <textarea
+              rows={4}
+              placeholder="How can we help you?"
+              className="w-full rounded-[4px] border border-[#D6CDC0] px-4 py-2.5 text-[#2D221F] placeholder-[#6A5E52] focus:outline-none focus:ring-2 focus:ring-[#C5923E] focus:ring-offset-2 resize-none"
+            />
+            <button
+              type="submit"
+              disabled
+              className="bg-[#C5923E] hover:bg-[#A87B2E] text-[#2D221F] font-medium px-6 py-2.5 rounded-[4px] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Send Message (demo)
+            </button>
+          </form>
+        </motion.section>
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-24 border-t border-[#D6CDC0] bg-[#F8F5ED]">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-12 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-[#6A5E52]">
+            © {new Date().getFullYear()} Fancy Family Wear. All rights reserved.
+          </p>
+          <p className="text-sm text-[#6A5E52]">
+            Made with care for Shahdara since 2010.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
