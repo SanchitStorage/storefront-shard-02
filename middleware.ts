@@ -4,13 +4,16 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
   const subdomain = host.split(".")[0];
-  
-  // Ignore requests that aren't for subdomains, or are for internal Next.js paths
-  if (subdomain === "www" || subdomain === "localhost" || !subdomain) {
+
+  if (
+    subdomain === "www" ||
+    subdomain === "localhost" ||
+    !subdomain ||
+    subdomain.startsWith("storefront-shard")
+  ) {
     return NextResponse.next();
   }
 
-  // Rewrite to the appropriate shard site directory
   return NextResponse.rewrite(new URL(`/sites/${subdomain}`, req.url));
 }
 
