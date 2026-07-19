@@ -1,377 +1,371 @@
 "use client";
 
-import { Josefin_Sans, Work_Sans } from "next/font/google";
-import Image from "next/image";
+import { Arvo } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { motion } from "framer-motion";
-import {
-  Shirt,
-  Baby,
-  ShoppingBag,
-  Tag,
-  Smile,
-  MapPin,
-  Phone,
-  Mail,
-  Send,
-} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Shirt, Baby, ShoppingBag } from "lucide-react";
+import { MapIframe } from "@/components/MapIframe";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
-const josefinSans = Josefin_Sans({
+const arvo = Arvo({
   subsets: ["latin"],
-  variable: "--font-josefin",
-});
-const workSans = Work_Sans({
-  subsets: ["latin"],
-  variable: "--font-work-sans",
+  weight: ["400", "700"],
+  variable: "--font-arvo",
 });
 
-// Icon mapping for services
-const iconMap: Record<string, React.ElementType> = {
-  Shirt,
-  Baby,
-  ShoppingBag,
-  Tag,
-  Smile,
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+});
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" as const },
+  },
 };
 
-// Animation config (using `as const` to narrow the `ease` literal type)
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.3 },
-  transition: { duration: 0.6, ease: "easeOut" },
-} as const;
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+  },
+};
 
-export default function Home() {
+const cardShadow =
+  "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.08)]";
+const cardHoverShadow = "hover:shadow-[0_2px_6px_rgba(0,0,0,0.1)]";
+
+export default function Page() {
   return (
-    <main className={`${josefinSans.variable} ${workSans.variable}`}>
+    <div
+      className={`${arvo.variable} ${dmSans.variable} font-[var(--font-dm-sans)] bg-[#FDFBF7] text-[#2C2A28] min-h-screen antialiased`}
+    >
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex items-center overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src="https://content.jdmagicbox.com/v2/comp/delhi/a3/011pxx11.xx11.180630225545.g5a3/catalogue/gupta-kids-store-shahdara-delhi-kids-readymade-garment-retailers-gt1589100u-250.jpg"
-            alt="Gupta Kids Store exterior"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-        <div className="absolute inset-0 bg-[#1C2E4A]/75" />
-        <motion.div
-          className="relative z-10 max-w-[1200px] mx-auto px-6 w-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-white font-[family-name:var(--font-josefin)] font-semibold text-5xl md:text-7xl leading-tight max-w-3xl">
-            Affordable Fashion for Your Family
-          </h1>
-          <p className="text-[#E3EDF5] text-lg md:text-xl mt-4 max-w-2xl font-[family-name:var(--font-work-sans)]">
-            Discover genuine kids&apos; and men&apos;s wear at the best prices in
-            Shahdara.
-          </p>
-          <a
-            href="#services"
-            className="mt-8 inline-block bg-[#F5B800] text-[#1A2E40] font-medium py-3 px-8 rounded-[2px] hover:bg-[#E0A800] transition-colors font-[family-name:var(--font-work-sans)]"
+      <section className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-20 md:py-28 lg:py-36 flex flex-col lg:flex-row items-center gap-12">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="flex-1 space-y-6"
           >
-            Explore Collection
-          </a>
-        </motion.div>
+            <h1 className="font-[var(--font-arvo)] text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              Gupta Kids Store
+            </h1>
+            <p className="text-xl md:text-2xl text-[#7D7062] font-medium">
+              Affordable Kids & Men&apos;s Wear in Shahdara
+            </p>
+            <p className="text-lg text-[#2C2A28]/80 max-w-2xl">
+              Discover a wide range of genuine clothing for children and adults at the best prices.
+            </p>
+            <Link
+              href="#services"
+              className="inline-block bg-[#E85D3E] text-white font-semibold px-8 py-3 rounded-[2px] shadow-[0_2px_0_rgba(0,0,0,0.12)] hover:bg-[#d14b2e] transition-colors duration-200"
+            >
+              Explore Collections
+            </Link>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+            className="flex-1 relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-[2px] overflow-hidden"
+          >
+            <Image
+              src="https://content.jdmagicbox.com/v2/comp/delhi/a3/011pxx11.xx11.180630225545.g5a3/catalogue/gupta-kids-store-shahdara-delhi-kids-readymade-garment-retailers-gt1589100u-250.jpg"
+              alt="Gupta Kids Store collection"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
+          </motion.div>
+        </div>
       </section>
 
       {/* About Section */}
-      <section
-        id="about"
-        className="py-24 px-6 bg-[#E3EDF5]"
-      >
-        <motion.div
-          className="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-12 items-center"
-          {...fadeUp}
-        >
-          <div>
-            <h2 className="text-[#1A2E40] font-[family-name:var(--font-josefin)] font-semibold text-4xl md:text-5xl">
-              About Gupta Kids Store
+      <section id="about" className="py-20 md:py-28 lg:py-36">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 flex flex-col lg:flex-row-reverse items-center gap-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="flex-1 space-y-6"
+          >
+            <h2 className="font-[var(--font-arvo)] text-3xl md:text-4xl font-bold">
+              About Our Store
             </h2>
-            <p className="text-[#5E5E5E] text-lg mt-2 font-[family-name:var(--font-work-sans)]">
-              Your trusted local clothing store
+            <p className="text-lg text-[#7D7062] font-medium">
+              Serving Shahdara families with quality clothing
             </p>
-            <p className="text-[#1A2E40] mt-6 leading-relaxed font-[family-name:var(--font-work-sans)]">
-              Located in the heart of Shahdara, we offer a wide range of
-              clothing for children and men. Our customers love our genuine
-              products, reasonable prices, and friendly service.
+            <p className="text-base text-[#2C2A28]/80 leading-relaxed max-w-xl">
+              We offer a wide range of kids&apos; daily wear, baby clothing, and men&apos;s fashion at reasonable prices. Our friendly team is dedicated to helping you find exactly what you need, with genuine products and excellent service every visit.
             </p>
-            <a
-              href="#location"
-              className="mt-6 inline-block border-2 border-[#F5B800] text-[#1A2E40] font-medium py-3 px-8 rounded-[2px] hover:bg-[#F5B800] hover:text-[#1A2E40] transition-colors font-[family-name:var(--font-work-sans)]"
-            >
-              Visit Us
-            </a>
-          </div>
-          <div className="relative h-[400px] w-full rounded-[4px] overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.06)]">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex-1 relative w-full h-[350px] md:h-[400px] rounded-[2px] overflow-hidden"
+          >
             <Image
               src="https://content3.jdmagicbox.com/v2/comp/delhi/a3/011pxx11.xx11.180630225545.g5a3/catalogue/gupta-kids-store-shahdara-delhi-kids-readymade-garment-retailers-1lkiss76h5.jpg"
-              alt="Inside Gupta Kids Store"
+              alt="Store interior"
               fill
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Services Section */}
-      <section
-        id="services"
-        className="py-24 px-6 bg-white"
-      >
-        <motion.div className="max-w-[1200px] mx-auto" {...fadeUp}>
-          <h2 className="text-[#1A2E40] font-[family-name:var(--font-josefin)] font-semibold text-4xl md:text-5xl text-center">
-            What We Offer
-          </h2>
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+      <section id="services" className="py-20 md:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 space-y-14">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="text-center space-y-3"
+          >
+            <h2 className="font-[var(--font-arvo)] text-3xl md:text-4xl font-bold">
+              What We Offer
+            </h2>
+            <p className="text-lg text-[#7D7062] font-medium">
+              Explore our collections
+            </p>
+            <p className="text-base text-[#2C2A28]/70 max-w-2xl mx-auto">
+              From everyday essentials to stylish outfits, we have something for everyone in the family.
+            </p>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {[
               {
-                iconName: "Shirt",
-                title: "Kids' Daily Wear",
-                description:
-                  "Comfortable and stylish everyday clothes for boys and girls.",
+                title: "Kids Daily Wear",
+                icon: Shirt,
+                desc: "Colorful and comfortable daily wear for kids of all ages.",
               },
               {
-                iconName: "Baby",
                 title: "Baby Clothing",
-                description:
-                  "Soft, safe, and adorable outfits for your little ones.",
+                icon: Baby,
+                desc: "Soft and gentle baby clothing collection.",
               },
               {
-                iconName: "ShoppingBag",
                 title: "Men's Apparel",
-                description:
-                  "Trendy shirts, trousers, and fashion for men.",
+                icon: ShoppingBag,
+                desc: "Stylish men's apparel for everyday wear.",
               },
-              {
-                iconName: "Tag",
-                title: "Reasonable Prices",
-                description: "Quality clothing that fits your budget.",
-              },
-              {
-                iconName: "Smile",
-                title: "Friendly Service",
-                description:
-                  "Our staff is always ready to help you find what you need.",
-              },
-            ].map((service, idx) => {
-              const Icon = iconMap[service.iconName];
-              return (
-                <motion.div
-                  key={idx}
-                  className="p-6 bg-white border border-[#D9D0B6] rounded-[4px] shadow-[0_2px_4px_rgba(0,0,0,0.06)] flex flex-col items-center text-center hover:shadow-[0_4px_8px_rgba(0,0,0,0.1)] transition-shadow"
-                  whileHover={{ y: -4 }}
-                >
-                  {Icon && (
-                    <Icon
-                      className="w-10 h-10 text-[#F5B800] mb-4"
-                      strokeWidth={1.5}
-                    />
-                  )}
-                  <h3 className="text-[#1A2E40] font-[family-name:var(--font-josefin)] font-semibold text-xl">
-                    {service.title}
-                  </h3>
-                  <p className="text-[#5E5E5E] mt-2 font-[family-name:var(--font-work-sans)]">
-                    {service.description}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                variants={fadeInUp}
+                className={`bg-[#FDFBF7] rounded-[2px] border border-[#D9CBB8] p-8 ${cardShadow} ${cardHoverShadow} transition-shadow duration-300 flex flex-col items-center text-center space-y-4`}
+              >
+                <div className="p-3 rounded-[2px] bg-[#E85D3E]/10">
+                  <item.icon className="w-8 h-8 text-[#E85D3E]" />
+                </div>
+                <h3 className="font-[var(--font-arvo)] text-xl font-bold">
+                  {item.title}
+                </h3>
+                <p className="text-[#2C2A28]/70">{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 px-6 bg-[#E3EDF5]">
-        <motion.div className="max-w-[1200px] mx-auto" {...fadeUp}>
-          <h2 className="text-[#1A2E40] font-[family-name:var(--font-josefin)] font-semibold text-4xl md:text-5xl text-center">
-            What Our Customers Say
-          </h2>
-          <p className="text-[#5E5E5E] text-lg mt-2 text-center font-[family-name:var(--font-work-sans)]">
-            Real reviews from happy shoppers
-          </p>
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="py-20 md:py-28 lg:py-36">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 space-y-14">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="text-center space-y-3"
+          >
+            <h2 className="font-[var(--font-arvo)] text-3xl md:text-4xl font-bold">
+              What Our Customers Say
+            </h2>
+            <p className="text-lg text-[#7D7062] font-medium">
+              Real reviews from local families
+            </p>
+            <p className="text-base text-[#2C2A28]/70 max-w-2xl mx-auto">
+              We&apos;re proud to be a trusted part of the community.
+            </p>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {[
               {
-                title: "Daily Wear Variety",
-                description:
-                  "So many options for daily wear and good staff behaviour.",
+                title: "Great Variety",
+                desc: "So many options for daily wear and good staff behaviour.",
               },
               {
                 title: "Genuine Products",
-                description:
-                  "The store products are genuine and all the varieties are available for baby and adults.",
+                desc: "The store products are genuine and all the varieties are available baby and adults.",
               },
               {
                 title: "Awesome Collection",
-                description:
-                  "Kids and mens wear collection is very awesome.",
+                desc: "kids nd mens wear collection is very awesome.",
               },
               {
-                title: "Reasonable and Humble",
-                description:
-                  "Very nice clothes in the store, reasonable price and humble staff. Thank you.",
+                title: "Reasonable & Humble",
+                desc: "Very nice clothes in the store, reasonable price and humble staff thank you ❤️",
               },
               {
-                title: "Good Collection and Price",
-                description:
-                  "Reasonable price and good collection for kids and mens.",
+                title: "Good Value",
+                desc: "Reasonable price and good collection for kids and mens.",
               },
             ].map((testimonial, idx) => (
               <motion.div
                 key={idx}
-                className="p-6 bg-white border border-[#D9D0B6] rounded-[4px] shadow-[0_2px_4px_rgba(0,0,0,0.06)]"
-                whileHover={{ y: -4 }}
+                variants={fadeInUp}
+                className={`bg-white rounded-[2px] border border-[#D9CBB8] p-6 ${cardShadow} ${cardHoverShadow} flex flex-col space-y-3`}
               >
-                <Smile className="w-8 h-8 text-[#F5B800] mb-4" />
-                <h3 className="text-[#1A2E40] font-[family-name:var(--font-josefin)] font-semibold text-lg">
+                <h4 className="font-[var(--font-arvo)] text-lg font-bold text-[#E85D3E]">
                   {testimonial.title}
-                </h3>
-                <p className="text-[#5E5E5E] mt-2 font-[family-name:var(--font-work-sans)]">
-                  {testimonial.description}
+                </h4>
+                <p className="text-[#2C2A28]/80 leading-relaxed italic">
+                  &ldquo;{testimonial.desc}&rdquo;
                 </p>
               </motion.div>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </section>
 
-      {/* Location Section */}
-      <section
-        id="location"
-        className="py-24 px-6 bg-white"
-      >
-        <motion.div
-          className="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-12 items-center"
-          {...fadeUp}
-        >
-          <div className="relative h-[400px] w-full rounded-[4px] overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.06)]">
-            <Image
-              src="https://content.jdmagicbox.com/v2/comp/delhi/a3/011pxx11.xx11.180630225545.g5a3/catalogue/gupta-kids-store-shahdara-delhi-kids-readymade-garment-retailers-shektqaa2a.jpg"
-              alt="Store front"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <h2 className="text-[#1A2E40] font-[family-name:var(--font-josefin)] font-semibold text-4xl md:text-5xl">
-              Visit Our Store
+      {/* Location Map */}
+      <section className="bg-white py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 space-y-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="text-center space-y-3"
+          >
+            <h2 className="font-[var(--font-arvo)] text-3xl md:text-4xl font-bold">
+              Find Us
             </h2>
-            <p className="text-[#5E5E5E] text-lg mt-2 font-[family-name:var(--font-work-sans)]">
-              Find us in Shahdara, Delhi
+            <p className="text-lg text-[#7D7062] font-medium">
+              Visit our store in Shahdara
             </p>
-            <div className="mt-6 space-y-4">
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-[#F5B800] mt-1 flex-shrink-0" />
-                <span className="text-[#1A2E40] font-[family-name:var(--font-work-sans)]">
-                  1/9295, Babarpur Main Rd, Mohan Park, West Rohtash Nagar,
-                  Shahdara, Delhi, 110032
-                </span>
-              </div>
-              <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-[#F5B800] mt-1 flex-shrink-0" />
-                <span className="text-[#1A2E40] font-[family-name:var(--font-work-sans)]">
-                  095821 26605
-                </span>
-              </div>
-            </div>
-            <a
-              href="https://maps.google.com/?q=Shahdara+Delhi"
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="rounded-[2px] overflow-hidden border border-[#D9CBB8]"
+          >
+            <MapIframe lat={28.6804622} lng={77.2867017} className="w-full h-[400px]" />
+          </motion.div>
+          <div className="text-center">
+            <Link
+              href="https://maps.google.com/?q=28.6804622,77.2867017"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-block border-2 border-[#F5B800] text-[#1A2E40] font-medium py-3 px-8 rounded-[2px] hover:bg-[#F5B800] hover:text-[#1A2E40] transition-colors font-[family-name:var(--font-work-sans)]"
+              className="inline-block bg-[#E85D3E] text-white font-semibold px-8 py-3 rounded-[2px] shadow-[0_2px_0_rgba(0,0,0,0.12)] hover:bg-[#d14b2e] transition-colors duration-200"
             >
               Get Directions
-            </a>
+            </Link>
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* Contact Form Section */}
-      <section className="py-24 px-6 bg-[#E3EDF5]">
-        <motion.div
-          className="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-12 items-center"
-          {...fadeUp}
-        >
-          <div>
-            <h2 className="text-[#1A2E40] font-[family-name:var(--font-josefin)] font-semibold text-4xl md:text-5xl">
+      {/* Contact Form */}
+      <section className="py-20 md:py-28 lg:py-36">
+        <div className="max-w-3xl mx-auto px-4 md:px-8 lg:px-16 space-y-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="text-center space-y-3"
+          >
+            <h2 className="font-[var(--font-arvo)] text-3xl md:text-4xl font-bold">
               Get in Touch
             </h2>
-            <p className="text-[#5E5E5E] text-lg mt-2 font-[family-name:var(--font-work-sans)]">
-              Have questions? We&apos;re here to help.
+            <p className="text-lg text-[#7D7062] font-medium">
+              Have questions? Drop us a message
             </p>
-            <form className="mt-6 space-y-4">
+            <p className="text-base text-[#2C2A28]/70">
+              We&apos;ll get back to you as soon as possible.
+            </p>
+          </motion.div>
+          <motion.form
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-6 bg-white rounded-[2px] border border-[#D9CBB8] p-8 shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <div className="space-y-4">
               <div>
+                <label className="block text-sm font-medium text-[#2C2A28] mb-1">
+                  Name
+                </label>
                 <input
                   type="text"
-                  placeholder="Your Name"
-                  className="w-full p-3 border border-[#D9D0B6] rounded-[4px] bg-white text-[#1A2E40] placeholder-[#5E5E5E] shadow-[inset_0_1px_2px_rgba(0,0,0,0.04)] focus:outline-none focus:ring-[3px] focus:ring-[#F5B800] font-[family-name:var(--font-work-sans)]"
+                  className="w-full border border-[#D9CBB8] rounded-[2px] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#E85D3E] focus:ring-offset-4 transition-shadow"
+                  placeholder="Your name"
                 />
               </div>
               <div>
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full p-3 border border-[#D9D0B6] rounded-[4px] bg-white text-[#1A2E40] placeholder-[#5E5E5E] shadow-[inset_0_1px_2px_rgba(0,0,0,0.04)] focus:outline-none focus:ring-[3px] focus:ring-[#F5B800] font-[family-name:var(--font-work-sans)]"
-                />
-              </div>
-              <div>
+                <label className="block text-sm font-medium text-[#2C2A28] mb-1">
+                  Phone
+                </label>
                 <input
                   type="tel"
-                  placeholder="Phone Number"
-                  className="w-full p-3 border border-[#D9D0B6] rounded-[4px] bg-white text-[#1A2E40] placeholder-[#5E5E5E] shadow-[inset_0_1px_2px_rgba(0,0,0,0.04)] focus:outline-none focus:ring-[3px] focus:ring-[#F5B800] font-[family-name:var(--font-work-sans)]"
+                  className="w-full border border-[#D9CBB8] rounded-[2px] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#E85D3E] focus:ring-offset-4 transition-shadow"
+                  placeholder="Your phone number"
                 />
               </div>
               <div>
+                <label className="block text-sm font-medium text-[#2C2A28] mb-1">
+                  Message
+                </label>
                 <textarea
-                  placeholder="Your Message"
                   rows={4}
-                  className="w-full p-3 border border-[#D9D0B6] rounded-[4px] bg-white text-[#1A2E40] placeholder-[#5E5E5E] shadow-[inset_0_1px_2px_rgba(0,0,0,0.04)] focus:outline-none focus:ring-[3px] focus:ring-[#F5B800] font-[family-name:var(--font-work-sans)]"
-                ></textarea>
+                  className="w-full border border-[#D9CBB8] rounded-[2px] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#E85D3E] focus:ring-offset-4 transition-shadow"
+                  placeholder="How can we help you?"
+                />
               </div>
-              <button
-                type="submit"
-                className="flex items-center gap-2 bg-[#F5B800] text-[#1A2E40] font-medium py-3 px-8 rounded-[2px] hover:bg-[#E0A800] transition-colors font-[family-name:var(--font-work-sans)]"
-              >
-                Send Message
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
-          </div>
-          <div className="relative h-[500px] w-full rounded-[4px] overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.06)]">
-            <Image
-              src="https://content3.jdmagicbox.com/v2/comp/delhi/a3/011pxx11.xx11.180630225545.g5a3/catalogue/gupta-kids-store-shahdara-delhi-kids-readymade-garment-retailers-uabzthstpc.jpg"
-              alt="Clothing collection"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </motion.div>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-[#E85D3E] text-white font-semibold py-3 px-8 rounded-[2px] shadow-[0_2px_0_rgba(0,0,0,0.12)] hover:bg-[#d14b2e] transition-colors duration-200"
+            >
+              Send Message
+            </button>
+          </motion.form>
+        </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-24 px-6 bg-[#1C2E4A]">
-        <motion.div
-          className="max-w-[1200px] mx-auto text-center"
-          {...fadeUp}
-        >
-          <h2 className="text-white font-[family-name:var(--font-josefin)] font-semibold text-4xl md:text-5xl">
-            Ready to Upgrade Your Wardrobe?
-          </h2>
-          <p className="text-[#E3EDF5] text-lg mt-4 font-[family-name:var(--font-work-sans)]">
-            Visit Gupta Kids Store today and explore our amazing collection.
-          </p>
-          <a
-            href="#location"
-            className="mt-8 inline-block bg-[#F5B800] text-[#1A2E40] font-medium py-3 px-8 rounded-[2px] hover:bg-[#E0A800] transition-colors font-[family-name:var(--font-work-sans)]"
-          >
-            Visit Us Now
-          </a>
-        </motion.div>
-      </section>
-    </main>
+      {/* Floating WhatsApp */}
+      <FloatingWhatsApp phoneNumber="919582126605" />
+    </div>
   );
 }
